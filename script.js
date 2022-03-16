@@ -1,5 +1,5 @@
 const API_KEY = "e6cc4e25-61dd-4dce-be3b-497780c72547";
-const domain = "https://holidayapi.com/v1/";
+const BASE_URL = "https://holidayapi.com/v1/";
 const loadingSpin = `<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>`;
 
 // convert params to query string
@@ -15,9 +15,9 @@ const query = (params) =>
 const getEle = (element) => document.querySelector(element);
 
 // fetch data
-const fetchDataFromAPI = async (API_KEY, domain, path, queryParams = "") => {
+const fetchDataFromAPI = async (path, queryParams = "") => {
   try {
-    const url = `${domain}${path}?pretty&key=${API_KEY}${queryParams}`;
+    const url = `${BASE_URL}${path}?pretty&key=${API_KEY}${queryParams}`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
@@ -43,12 +43,7 @@ const renderItem = async (pathUrl, eleList, queryParams) => {
     ulItemList.innerHTML = loadingSpin;
 
     //get data from API
-    const result = await fetchDataFromAPI(
-      API_KEY,
-      domain,
-      pathUrl,
-      queryParams
-    );
+    const result = await fetchDataFromAPI(pathUrl, queryParams);
     const data = result[pathUrl];
 
     // remove loading
